@@ -1,6 +1,14 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
+import { provideHttpClient } from '@angular/common/http';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { AppComponent } from './app/app.component';
+import { InMemoryDataService } from './app/in-memory-data.service';
 
-bootstrapApplication(AppComponent, appConfig)
-  .catch((err) => console.error(err));
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideHttpClient(), // Configure le service HttpClient
+    // Ajout du module InMemoryWebApi avec la configuration du service en mémoire
+    { provide: HttpClientInMemoryWebApiModule, useFactory: () => HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService) }
+  ]
+
+}).catch(err => console.error(err));
