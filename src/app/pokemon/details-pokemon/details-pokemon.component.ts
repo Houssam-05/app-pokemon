@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { POKEMONS } from '../mock-pokemon-list';
+// import { POKEMONS } from '../mock-pokemon-list';
 import { Pokemon } from '../pokemon';
 import { PokemonTypeColorPipe } from '../pokemon-type-color.pipe';
 import { PokemonService } from '../pokemon.service';
@@ -38,6 +38,6 @@ export class DetailsPokemonComponent implements OnInit {
 
   }
   goToEditPokemon(pokemon: Pokemon) {
-    this.router.navigate(['/edit/pokemon', pokemon.id]);
+    this.router.navigate(['/edit/pokemon', pokemon.pokedex_id]);
   }
 }

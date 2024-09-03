@@ -1,25 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Pokemon } from '../pokemon';
 import { PokemonService } from '../pokemon.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PokemonFormComponent } from '../pokemon-form/pokemon-form.component';
-
-
-
+import { Pokemon } from '../pokemon';
 
 @Component({
   selector: 'app-edit-pokemon',
   standalone:true,
   imports:[CommonModule,FormsModule,PokemonFormComponent],
   template: `
-    <h2 class="center">Editer {{pokemon?.name}}</h2>
+    <h2 class="center">Editer {{pokemon?.name?.fr}}</h2>
 
-    <p *ngIf="pokemon" class="center">
-      <img [src]="pokemon.picture">
-    </p>
-    <app-pokemon-form *ngIf="pokemon" [pokemon]="pokemon"></app-pokemon-form>
+<p *ngIf="pokemon" class="center">
+  <img [src]="pokemon.sprites?.regular" alt="{{pokemon?.name?.fr}}">
+</p>
+
+<app-pokemon-form *ngIf="pokemon" [pokemon]="pokemon"></app-pokemon-form>
   `,
   styles: [
   ]

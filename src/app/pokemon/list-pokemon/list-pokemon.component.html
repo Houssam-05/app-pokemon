@@ -1,22 +1,38 @@
 <div class="row">
+  <!-- Composant de recherche Pokémon -->
   <app-search-pokemon></app-search-pokemon>
+
+  <!-- Liste des Pokémon -->
   <div *ngFor="let pokemon of pokemonsList" class="col m4 s6">
-    <div (click)="goToPokemon(pokemon)" class="card horizontal"appBordercard="red">
+    <div (click)="goToPokemon(pokemon)" class="card horizontal" >
+      <!-- Image du Pokémon -->
       <div class="card-image">
-        <img [src]="pokemon.picture" alt="" />
+        <img [src]="pokemon.sprites.regular" alt="{{pokemon.name}}" />
       </div>
       <div class="card-stacked">
+        <!-- Contenu de la carte -->
         <div class="card-content">
-          <p>{{pokemon.name}}</p>
-          <p><small>{{pokemon.created | date:"dd/MM/YY"}}</small></p>
-          <span
-           *ngFor="let type of pokemon.types"
-            class="{{type | pokemonTypeColor}}"
-          >
-            {{type}}
-          </span>
+          <!-- Nom du Pokémon -->
+          <p><strong>{{pokemon.name.fr}}</strong></p>
+          <!-- Points de vie -->
+          <p><strong>Points de vie :</strong> {{pokemon.stats.hp}}</p>
+          <!-- Catégorie (non définie dans l'interface, vous pouvez supprimer ou remplacer par autre chose) -->
+          <!-- <p><strong>Catégorie :</strong> {{pokemon.category}}</p> -->
+          <!-- Description du Pokémon -->
+          <p><strong>Description :</strong> {{pokemon.description}}</p>
+          <!-- Types -->
+          <p><strong>Types :</strong></p>
+          <div>
+            <span
+              *ngFor="let type of pokemon.types"
+              [ngClass]="type.name | pokemonTypeColor"
+              class="pokemon-type"
+            >
+              {{type.name}}
+            </span>
+          </div>
         </div>
       </div>
+    </div>
   </div>
-</div>
 </div>

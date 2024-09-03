@@ -4,17 +4,18 @@ import { Router, RouterLink } from '@angular/router';
 import { PokemonTypeColorPipe } from '../pokemon-type-color.pipe';
 import { CommonModule } from '@angular/common';
 import { PokemonService } from '../pokemon.service';
-import { HttpClient } from '@angular/common/http';
+import { SerarchPokemonComponent } from '../search-pokemon/search-pokemon.component';
+
 
 @Component({
-  selector: 'app-list-pokemon',
   standalone: true,
-  imports: [CommonModule, RouterLink, PokemonTypeColorPipe],
+  imports: [CommonModule, RouterLink, PokemonTypeColorPipe,SerarchPokemonComponent,],
   templateUrl: './list-pokemon.component.html',
   styleUrls: ['./list-pokemon.component.css']
 })
 export class ListPokemonComponent implements OnInit {
-  pokemonsList: Pokemon[]=[];
+  pokemonsList: Pokemon[] = [];
+  // pokemonsList: any[] = [];
 
   constructor(
     private router: Router,
@@ -22,13 +23,20 @@ export class ListPokemonComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.pokemonService.getPokemonList().subscribe(pokemonsList=>this.pokemonsList=pokemonsList);
-    console.log("Pokemon[1]" + this.pokemonsList[1].name);
+    this.pokemonService.getPokemonList().subscribe(dataFromAPI => {
+      dataFromAPI.forEach((pokemon: Pokemon) => {
+        if (pokemon.pokedex_id !== 0 && pokemon.pokedex_id <= 10) {
+          this.pokemonsList.push(pokemon)
+          console.log(pokemon);
+        }
+      });
+
+    });
   }
 
   goToPokemon(pokemon: Pokemon) {
     // Assuming that you want to navigate to a detailed view of the selected Pokemon,
     // and the route expects an ID as a parameter, you might do something like this:
-    this.router.navigate(['/pokemons', pokemon.id]);
+    this.router.navigate(['/pokemons', pokemon.pokedex_id]);
   }
 }
